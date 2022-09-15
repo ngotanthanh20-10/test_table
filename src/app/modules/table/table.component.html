@@ -1,0 +1,46 @@
+<div class="pen-table">
+    <ng-container *ngIf="stateProps.showTable">
+      <nz-table [nzLoading]="loading" nzTemplateMode [nzLoadingIndicator]="nzLoadingIndicator || loadingTable"
+        nzSize="small" nzSimple [nzFrontPagination]="false"
+        [nzPageIndex]="stateProps.param && stateProps.param.pageNumber || 1"
+        [nzTotal]="stateProps.param && stateProps.param.totalElements || (stateProps.param && stateProps.param.totalPages * stateProps.param.pageSize || 0)"
+        [nzPageSize]="stateProps.param && stateProps.param.pageSize || 0" [nzShowPagination]="false"
+        [nzPageSizeOptions]="stateProps.nzPageSizeOptions ? stateProps.nzPageSizeOptions : [10,20,30,40,50,100]"
+        [nzScroll]="{ y: stateProps.maxHeight || '', x: stateProps.minWidth && stateProps.minWidth > -1 ? stateProps.minWidth + 'px' : '600px' }"
+        [nzWidthConfig]="stateProps.nzWidthConfig ? stateProps.nzWidthConfig : []">
+        <thead>
+          <ng-content select="[header]"></ng-content>
+        </thead>
+        <tbody *ngIf="stateProps.param && stateProps.param.totalPages" style="min-height: 320px;">
+          <ng-content select="[body]"></ng-content>
+        </tbody>
+        <div class="pen-mt-30 pen-mb-30" style="min-height: 320px;"
+          *ngIf="stateProps.param && !stateProps.param.totalPages">
+          <div style="position: absolute; top: 50%;left: 50%;transform: translate(-50%,-50%);">
+            <ng-container [ngTemplateOutlet]="noData"></ng-container>
+          </div>
+        </div>
+      </nz-table>
+    </ng-container>
+    <ng-content select="[custom-body]"></ng-content>
+  
+    <!-- <ng-container>
+      <nz-pagination class="pen-mt-10 pen-mb-10" *ngIf="currentParams.totalPages >= 1 && stateProps.showPagination"
+        [nzPageSize]="currentParams.pageSize || 10" [nzPageIndex]=" currentParams.pageNumber || 1 "
+        [nzShowSizeChanger]="true" [nzTotal]="currentParams.totalPages * currentParams.pageSize || 0"
+        (nzPageIndexChange)="onQueryParamsChange($event, 'page')"
+        [nzPageSizeOptions]="stateProps.nzPageSizeOptions ? stateProps.nzPageSizeOptions : [10,20,30,40,50,100]"
+        (nzPageSizeChange)="onQueryParamsChange($event, 'size')">
+      </nz-pagination>
+  
+    </ng-container> -->
+  
+    <ng-template #loadingTable>
+        <span>loading...</span>
+      <!-- <app-loading></app-loading> -->
+    </ng-template>
+    <ng-template #noData>
+        <span>no data</span>
+      <!-- <nz-empty [nzNotFoundContent]="stateProps.no_data_msg || 'error.NO_DATA' | translate"></nz-empty> -->
+    </ng-template>
+  </div>

@@ -1,0 +1,18 @@
+<app-table>
+    <tr header>
+        <th *ngFor="let i of titleTable">
+          {{ i }}
+        </th>
+      </tr>
+    
+      <tr
+        body
+        *ngFor="let data of propsState.data"
+        style="cursor: pointer"
+      >
+        <td>{{ data.id || "" }}</td>
+        <td>{{ data.name|| "" }}</td>
+        <td>{{ data.username || "" }}</td>
+        <td>{{ data.email || "" }}</td>
+      </tr>
+</app-table>
